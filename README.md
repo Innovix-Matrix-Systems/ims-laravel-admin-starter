@@ -126,7 +126,14 @@ To execute tests for your application, utilize the following command:
 ```
 
 Running tests is crucial to ensure the reliability and correctness of your application's functionality. The above command will initiate the testing process and provide you with valuable insights into the quality of your codebase.
+## Performance Tips
+Some Performance Tips for filament
 
+### Icon cache
+Run this command to make filament app fast
+```bash
+php artisan icons:cache
+```
 ## Extra Artisan Commands
 This project provides additional Artisan commands to simplify your workflow and enhance productivity.
 
