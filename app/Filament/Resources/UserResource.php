@@ -17,7 +17,6 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
@@ -26,7 +25,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationGroup = 'Settings';
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 2;
 
     public static function getNavigationBadge(): ?string
     {
@@ -39,7 +38,7 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::query()->with('roles.permissions', 'permissions');
+        return static::getModel()::query()->with('roles.permissions', 'permissions')->where('id', '!=', Auth::user()->id);
     }
 
     public static function form(Form $form): Form
@@ -67,9 +66,7 @@ class UserResource extends Resource
                                     return true;
                                 }
                                 return !$record->isSuperAdmin();
-                            })
-                            ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                            ->dehydrated(fn ($state) => filled($state)),
+                            }),
                         Forms\Components\Toggle::make('is_active')
                             ->required()
                             ->disabled(function ($record) {
@@ -84,7 +81,8 @@ class UserResource extends Resource
                             ->relationship('roles', 'name', function (Role $role) {
                                 return $role::where('id', '!=', 1);
                             })
-                            ->preload(),
+                            ->preload()
+                            ->visible(Auth::user()->hasPermissionTo('role.update')),
                     ])->columns(1)
             ]);
     }
@@ -170,6 +168,7 @@ class UserResource extends Resource
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
+            //'settings' => Pages\Settings::route('/settings'),
         ];
     }
 }
