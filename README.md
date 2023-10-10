@@ -2,23 +2,23 @@
 
 `ims-laravel-admin-starter` is a streamlined Admin panel & API starter application built using the powerful [Laravel 10](https://laravel.com/) framework and [Filment 3](https://filamentphp.com/).
 
-Our primary focus is to provide you with a hassle-free and ready-to-use local development starter project. 
+Our primary focus is to provide you with a hassle-free and ready-to-use local development starter project.
 
 Unlike traditional API generators or code generators, this project simplifies the process of setting up your local development environment. It enables you to jumpstart your Laravel-based API development and admin panel development without unnecessary complexities. This allows you to focus on building your application logic rather than spending time on initial setup.
+
 ## Features
 
-- Role and permission-based operations
-- User management
-- Profile settings
+-   Role and permission-based operations
+-   User management
+-   Profile settings
 
 ## Accessing the Admin Panel
 
-Once you have set up the Dokani Backend using the provided instructions, you can access the admin panel by visiting the `/admin` route in your web browser.
+Once you have set up the Project using the provided instructions, you can access the admin panel by visiting the `/admin` route in your web browser.
 
 ### Logging In
 
 If you have run the seed command during the setup process, you can log in using the following credentials:
-
 
 ```bash
 email: superadmin@ims.com
@@ -30,7 +30,7 @@ password: 123456
 
 ### Role and Permission-Based Operations
 
-The `ims-laravel-admin-starter`` supports role and permission-based operations to control access to various functionalities within your admin panel. You can define roles with specific permissions and assign them to users as needed.
+The `ims-laravel-admin-starter` supports role and permission-based operations to control access to various functionalities within your admin panel. You can define roles with specific permissions and assign them to users as needed.
 
 Explore this project and experience the convenience of a ready-made local development environment for your Laravel-based APIs and Admin Panels.
 
