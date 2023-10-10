@@ -8,6 +8,8 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,6 +19,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
@@ -36,9 +39,26 @@ class UserResource extends Resource
         return 'info';
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('name'),
+                Infolists\Components\TextEntry::make('email'),
+                Infolists\Components\TextEntry::make('email_verified_at'),
+                Infolists\Components\IconEntry::make('is_active')->boolean(),
+                Infolists\Components\TextEntry::make('roles')
+                ->badge()
+                ->state(function (User $record) {
+                    return $record->getRoleNames();
+                })
+                ->columnSpanFull(),
+            ]);
+    }
+
     public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::query()->with('roles.permissions', 'permissions')->where('id', '!=', Auth::user()->id);
+        return static::getModel()::query()->with('roles.permissions', 'permissions');
     }
 
     public static function form(Form $form): Form
@@ -61,6 +81,8 @@ class UserResource extends Resource
                             ->password()
                             ->required(fn (Page $livewire) => ($livewire instanceof CreateUser))
                             ->maxLength(255)
+                            ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                            ->dehydrated(fn (?string $state): bool => filled($state))
                             ->visible(function ($record) {
                                 if (!$record) {
                                     return true;
@@ -133,6 +155,7 @@ class UserResource extends Resource
                 //     ]),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()->visible(fn (User $record) => !$record->isSuperAdmin()),
                 // Action::make('delete')
@@ -168,7 +191,7 @@ class UserResource extends Resource
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
-            //'settings' => Pages\Settings::route('/settings'),
+            'view' => Pages\ViewUser::route('/{record}'),
         ];
     }
 }

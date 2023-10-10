@@ -9,9 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
-use Filament\Panel;
 use Filament\Widgets\AccountWidget;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,27 +22,6 @@ class Settings extends Page
     protected static ?string $navigationLabel = 'Profile Settings';
     protected ?string $heading = 'Profile Settings';
 
-
-
-
-    // public function getFooter(): ?View
-    // {
-    //     return view('filament.settings.footer');
-    // }
-
-    // protected function getFormActions(): array
-    // {
-    //     return [
-    //         $this->getSaveFormAction(),
-    //     ];
-    // }
-
-    // public function panel(Panel $panel): Panel
-    // {
-    //     return $panel
-    //         // ...
-    //         ->pages([]);
-    // }
     protected function getHeaderWidgets(): array
     {
         return [

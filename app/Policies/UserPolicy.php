@@ -11,7 +11,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('user.view');
+        return $user->hasPermissionTo('user.view.all');
     }
 
     /**
@@ -35,6 +35,9 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
+        if($model->isSuperAdmin() && !$user->isSuperAdmin()) {
+            return false;
+        }
         return $user->hasPermissionTo('user.update');
     }
 
@@ -43,6 +46,9 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
+        if($model->isSuperAdmin()) {
+            return false;
+        }
         return $user->hasPermissionTo('user.delete');
     }
 

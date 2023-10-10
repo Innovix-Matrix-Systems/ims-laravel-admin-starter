@@ -23,6 +23,12 @@ class PermissionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'name' => 'role.view.all',
+                'guard_name' => $this->guard,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
                 'name' => 'role.create',
                 'guard_name' => $this->guard,
                 'created_at' => now(),
@@ -43,6 +49,12 @@ class PermissionSeeder extends Seeder
             //user
             [
                 'name' => 'user.view',
+                'guard_name' => $this->guard,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'user.view.all',
                 'guard_name' => $this->guard,
                 'created_at' => now(),
                 'updated_at' => now(),
