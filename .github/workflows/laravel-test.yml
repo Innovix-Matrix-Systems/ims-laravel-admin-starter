@@ -29,6 +29,7 @@ jobs:
         run: |
           mkdir -p database
           touch database/database.sqlite
+          php artisan migrate --seed
       - name: Execute tests (Unit and Feature tests) via PEST
         env:
           DB_CONNECTION: sqlite
