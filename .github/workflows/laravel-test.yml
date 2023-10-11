@@ -26,6 +26,9 @@ jobs:
           chmod -R 777 storage storage
           chmod -R 777 storage bootstrap/cache
       - name: Create Database
+        env:
+          DATABASE_URL: sqlite
+          DB_DATABASE: database/database.sqlite
         run: |
           mkdir -p database
           touch database/database.sqlite
