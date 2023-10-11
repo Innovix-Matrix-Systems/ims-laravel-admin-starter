@@ -16,7 +16,7 @@ jobs:
           php-version: "8.1"
       - uses: actions/checkout@v3
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+        run: php -r "file_exists('.env') || copy('.env.testing.example', '.env');"
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate key
@@ -27,14 +27,15 @@ jobs:
           chmod -R 777 storage bootstrap/cache
       - name: Create Database
         env:
-          DATABASE_URL: sqlite
+          DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
         run: |
           mkdir -p database
           touch database/database.sqlite
+          php artisan cache:clear
           php artisan migrate --seed
       - name: Execute tests (Unit and Feature tests) via PEST
         env:
-          DATABASE_URL: sqlite
+          DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
         run: vendor/bin/pest
