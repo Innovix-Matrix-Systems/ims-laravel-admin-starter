@@ -6,11 +6,37 @@ Our primary focus is to provide you with a hassle-free and ready-to-use local de
 
 Unlike traditional API generators or code generators, this project simplifies the process of setting up your local development environment. It enables you to jumpstart your Laravel-based API development and admin panel development without unnecessary complexities. This allows you to focus on building your application logic rather than spending time on initial setup.
 
+![demo](demo.png "Ims Admin Starter")
+
 ## Features
 
 -   Role and permission-based operations
 -   User management
 -   Profile settings
+## Quick Start
+
+1. **Choose Your Local Development Tool:**
+
+   Select your preferred local development tool, such as [Laragon](https://github.com/leokhoa/laragon), XAMPP, WAMP, or any other tool that suits your needs.
+
+2. **Configure Your Environment:**
+
+   Update your `.env` file with the correct database credentials.
+
+3. **Install Dependencies:**
+
+   Run the following command to install required dependencies using Composer:
+
+   ```bash
+   composer install
+   ```
+4. **Migrate and Seed the Database:**
+    Initialize and seed the database with default data using:
+    ```bash 
+    php artisan migrate --seed
+    ```
+
+    Now, your project is ready for use. You can access the admin panel via the provided route. If you've run the seed command, log in with the provided credentials. Customize and expand your application as needed.
 
 ## Accessing the Admin Panel
 
@@ -34,9 +60,7 @@ The `ims-laravel-admin-starter` supports role and permission-based operations to
 
 Explore this project and experience the convenience of a ready-made local development environment for your Laravel-based APIs and Admin Panels.
 
-![demo](demo.png "Ims Admin Starter")
-
-## Required Commands to run locally
+## Required Details Commands to run locally
 
 1.**Create Your Project from the Template:**
 
