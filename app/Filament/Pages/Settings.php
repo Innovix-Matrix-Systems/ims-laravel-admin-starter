@@ -2,10 +2,11 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
@@ -13,8 +14,9 @@ use Filament\Widgets\AccountWidget;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class Settings extends Page
+class Settings extends Page implements HasForms
 {
+    use InteractsWithForms;
     protected static string $view = 'filament.pages.settings';
     protected static ?string $navigationIcon = 'heroicon-o-cog';
     protected static ?string $navigationGroup = 'Settings';
@@ -29,13 +31,12 @@ class Settings extends Page
         ];
     }
 
-    public function mount(): void
+    protected function getForms(): array
     {
-        $this->form->fill([
-            'name' => Auth::user()->name,
-            'email' => Auth::user()->email,
-        ]);
-        $this->userId = Auth::user()->id;
+        return [
+            'updateProfileFrom',
+            'updatePasswordForm',
+        ];
     }
 
     public $name;
@@ -45,11 +46,28 @@ class Settings extends Page
     public $password;
     public $password_confirmation;
 
-    public function aboutFormAction()
+    public function mount(): void
+    {
+        $this->updateProfileFrom->fill([
+            'name' => Auth::user()->name,
+            'email' => Auth::user()->email,
+        ]);
+        $this->userId = Auth::user()->id;
+    }
+
+    public function saveProfileAction()
     {
         return  Action::make('save profile information')
             ->label('Save')
             ->action('saveProfile')
+            ->color('primary');
+    }
+
+    public function savePasswordAction()
+    {
+        return  Action::make('update password')
+            ->label('Update Password')
+            ->action('updatePassword')
             ->color('primary');
     }
 
@@ -58,17 +76,12 @@ class Settings extends Page
         $this->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $this->userId . ',id',
-            'password' => 'sometimes|nullable|min:6|confirmed',
-            'password_confirmation' => 'sometimes|nullable|min:6|required_with:password',
         ]);
 
         try {
-            $user = User::find($this->userId);
+            $user = Auth::user();
             $user->name = $this->name;
             $user->email = $this->email;
-            if (!empty($this->password)) {
-                $user->password = Hash::make($this->password);
-            }
             $user->save();
 
             Notification::make()
@@ -84,7 +97,45 @@ class Settings extends Page
         }
     }
 
-    public function Form(Form $form): Form
+    public function updatePassword(): void
+    {
+        $this->validate([
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required_with:password|min:6',
+        ]);
+
+        try {
+            $user = Auth::user();
+            $user->password = Hash::make($this->password);
+            $user->save();
+
+            Notification::make()
+                ->title('Password Updated Successfully')
+                ->success()
+                ->send();
+        } catch (\Throwable $th) {
+            //throw $th;
+            Notification::make()
+                ->title('Failed to update password')
+                ->danger()
+                ->send();
+        }
+    }
+
+    public function updatePasswordForm(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Section::make("Password")
+                    ->description("Update Your Password")
+                    ->schema([
+                        TextInput::make('password')->password()->autocomplete(false),
+                        TextInput::make('password_confirmation')->password(),
+                    ])->columns(2),
+            ]);
+    }
+
+    public function updateProfileFrom(Form $form): Form
     {
         return $form
             ->schema([
@@ -93,12 +144,6 @@ class Settings extends Page
                     ->schema([
                         TextInput::make('name'),
                         TextInput::make('email'),
-                    ])->columns(2),
-                Section::make("Password")
-                    ->description("Update Your Password. Keep empty if you don't want to change password")
-                    ->schema([
-                        TextInput::make('password')->password()->autocomplete(false),
-                        TextInput::make('password_confirmation')->password(),
                     ])->columns(2),
             ]);
     }
