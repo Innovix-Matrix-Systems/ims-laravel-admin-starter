@@ -1,13 +1,15 @@
 <x-filament-panels::page>
-
-    <form wire:submit.prevent="submit">
-        {{ $this->form }}
+    <div>
+        {{ $this->updateProfileFrom }}
         <br>
         <div style="text-align:center">
-            {{ $this->aboutFormAction }}
+            {{ $this->saveProfileAction }}
         </div>
-
-
-    </form>
-
+        <br>
+        {{ $this->updatePasswordForm }}
+        <br>
+        <div style="text-align:center">
+            {{ $this->savePasswordAction }}
+        </div>
+    </div>
 </x-filament-panels::page>

@@ -13,26 +13,29 @@ Unlike traditional API generators or code generators, this project simplifies th
 -   Role and permission-based operations
 -   User management
 -   Profile settings
+
 ## Quick Start
 
 1. **Choose Your Local Development Tool:**
 
-   Select your preferred local development tool, such as [Laragon](https://github.com/leokhoa/laragon), XAMPP, WAMP, or any other tool that suits your needs.
+    Select your preferred local development tool, such as [Laragon](https://github.com/leokhoa/laragon), XAMPP, WAMP, or any other tool that suits your needs.
 
 2. **Configure Your Environment:**
 
-   Update your `.env` file with the correct database credentials.
+    Update your `.env` file with the correct database credentials.
 
 3. **Install Dependencies:**
 
-   Run the following command to install required dependencies using Composer:
+    Run the following command to install required dependencies using Composer:
 
-   ```bash
-   composer install
-   ```
+    ```bash
+    composer install
+    ```
+
 4. **Migrate and Seed the Database:**
-    Initialize and seed the database with default data using:
-    ```bash 
+   Initialize and seed the database with default data using:
+
+    ```bash
     php artisan migrate --seed
     ```
 
@@ -106,27 +109,10 @@ To install Composer packages needed for CS Fixer to run independently outside of
 composer install
 ```
 
-6.**Start Docker and run:**
-Launch Docker and run the application with the following command:
-
-```bash
-docker-compose up
-```
-
-Should be found running in port `8000`
-and `phpmyadmin` running at port `8080`
-
-7.**Running Migration and Other Commands:**
-To execute Laravel-specific commands like migrations,queue,schedule,csfixer etc use the following command:
-
-```bash
-docker-compose exec app bash
-```
-
-8.**Runnig on Laragon**
+6.**Runnig on Laragon**
 If you prefer not to use Docker for local development, you can use [Laragon](https://github.com/leokhoa/laragon) to set up and run the Dokani backend on your local machine. Laragon is a powerful tool for local web development with a range of features.
 
-9.**Running Migration and Seeder**
+7.**Running Migration and Seeder**
 To initialize the database and start with some default data, you can run migrations and seeders using the following commands:
 
 **_Step 1: Migrate the Database_**
@@ -153,7 +139,7 @@ php artisan migrate --seed
 
 This command combines the migration and seeding steps, making it convenient for initial setup.
 
-10.**Generate IDE Helper Files:**
+8.**Generate IDE Helper Files:**
 Generate general IDE helper files for improved code autocompletion and navigation by running:
 
 ```bash
@@ -168,14 +154,7 @@ php artisan ide-helper:models -N
 php artisan ide-helper:models --nowrite
 ```
 
-11.**Fix PHP Lint and Run CS Fixer:**
-To fix PHP lint issues and run the Code Style Fixer, use the following command:
-
-```bash
-php artisan csfixer:run
-```
-
-12.**Run App health Check:**
+9.**Run App health Check:**
 After starting the app, it's essential to verify its health by performing the following steps:
 
 Open your web browser or use a tool like `curl` to access the health check endpoint:
@@ -204,13 +183,33 @@ Remember to perform this health check regularly, especially after making signifi
 
 ## Running Test
 
-To execute tests for your application, utilize the following command:
+To ensure the reliability and correctness of your application, it's essential to execute tests. Follow these simple steps:
 
-```bash
-./vendor/bin/pest
-```
+1. **Create a Separate Test Database:**
 
-Running tests is crucial to ensure the reliability and correctness of your application's functionality. The above command will initiate the testing process and provide you with valuable insights into the quality of your codebase.
+    Start by creating a dedicated test database for your application. You can name it `ims-admin-testing` to keep it distinct from your production database.
+
+2. **Run Tests:**
+
+    You have two convenient options for running tests:
+
+    - **Using Pest:**
+
+        Execute tests with Pest, a delightful PHP testing framework. Simply run the following command:
+
+        ```bash
+        ./vendor/bin/pest
+        ```
+
+    - **Using Artisan:**
+
+        Laravel's Artisan command-line tool provides seamless testing capabilities. Run the tests with the following Artisan command:
+
+        ```bash
+        php artisan test
+        ```
+
+Running tests is crucial to ensure the reliability and correctness of your application's functionality. The above commands will initiate the testing process and provide you with valuable insights into the quality of your codebase.
 
 ## Performance Tips
 
