@@ -89,13 +89,13 @@ class Settings extends Page implements HasForms
             $user->save();
 
             Notification::make()
-                ->title('Saved successfully')
+                ->title(__('pages.profile.saved_successfully'))
                 ->success()
                 ->send();
         } catch (\Throwable $th) {
             //throw $th;
             Notification::make()
-                ->title('Failed to update profile')
+                ->title(__('pages.profile.save_failed'))
                 ->danger()
                 ->send();
         }
@@ -114,13 +114,13 @@ class Settings extends Page implements HasForms
             $user->save();
 
             Notification::make()
-                ->title('Password Updated Successfully')
+                ->title(__('pages.profile.password.saved'))
                 ->success()
                 ->send();
         } catch (\Throwable $th) {
             //throw $th;
             Notification::make()
-                ->title('Failed to update password')
+                ->title(__('pages.profile.save_failed'))
                 ->danger()
                 ->send();
         }
@@ -130,8 +130,8 @@ class Settings extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make("Password")
-                    ->description("Update Your Password")
+                Section::make(__('pages.profile.password'))
+                    ->description(__('pages.profile.update_password'))
                     ->schema([
                         TextInput::make('password')->password()->autocomplete(false),
                         TextInput::make('password_confirmation')->password(),
@@ -143,8 +143,8 @@ class Settings extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make("About")
-                    ->description('Settings for Account')
+                Section::make(__('pages.profile.account_information'))
+                    ->description(__('pages.profile.account_settings'))
                     ->schema([
                         TextInput::make('name'),
                         TextInput::make('email'),
