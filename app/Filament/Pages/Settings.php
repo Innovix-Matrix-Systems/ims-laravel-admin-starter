@@ -21,8 +21,12 @@ class Settings extends Page implements HasForms
     protected static ?string $navigationIcon = 'heroicon-o-cog';
     protected static ?string $navigationGroup = 'Settings';
     protected static ?int $navigationSort = 3;
-    protected static ?string $navigationLabel = 'Profile Settings';
+    //protected static ?string $navigationLabel = 'Profile Settings';
     protected ?string $heading = 'Profile Settings';
+    public static function getNavigationLabel(): string
+    {
+        return __('pages.profile.settings');
+    }
 
     protected function getHeaderWidgets(): array
     {

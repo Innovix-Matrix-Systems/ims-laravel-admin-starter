@@ -22,6 +22,15 @@ class RoleResource extends Resource
     protected static ?string $navigationGroup = 'Settings';
     protected static ?int $navigationSort = 1;
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.role');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('resources.role.plural');
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

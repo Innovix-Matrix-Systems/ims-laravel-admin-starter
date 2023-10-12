@@ -13,6 +13,7 @@ Unlike traditional API generators or code generators, this project simplifies th
 -   Role and permission-based operations
 -   User management
 -   Profile settings
+-   Multiple Language Support
 
 ## Quick Start
 

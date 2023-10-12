@@ -35,6 +35,15 @@ class UserResource extends Resource
         return 'info';
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.user');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('resources.user.plural');
+    }
+
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist

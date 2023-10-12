@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Filament\Facades\Filament;
 use Filament\Navigation\NavigationItem;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
         //             ->group('Settings')
         //             ->sort(3),
         //     ]);
+        // });
+        // Filament::serving(function () {
+        //     Config::set('app.locale', 'bn');
+        //     Carbon::setLocale('bn');
         // });
     }
 }

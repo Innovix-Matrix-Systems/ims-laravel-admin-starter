@@ -4,11 +4,15 @@ namespace App\Filament\Widgets;
 
 use App\Models\User;
 use Filament\Widgets\ChartWidget;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
 
 class UserJoinChart extends ChartWidget
 {
-    protected static ?string $heading = 'User Creaion Summary this year';
+    public function getHeading(): string|Htmlable|null
+    {
+        return __('widgets.chart.user.join_this_year');
+    }
 
     public static function canView(): bool
     {
