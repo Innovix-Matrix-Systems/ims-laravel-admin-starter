@@ -30,10 +30,6 @@ class UserResource extends Resource
     protected static ?string $navigationGroup = 'Settings';
     protected static ?int $navigationSort = 2;
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
     public static function getNavigationBadgeColor(): ?string
     {
         return 'info';
@@ -48,17 +44,17 @@ class UserResource extends Resource
                 Infolists\Components\TextEntry::make('email_verified_at'),
                 Infolists\Components\IconEntry::make('is_active')->boolean(),
                 Infolists\Components\TextEntry::make('roles')
-                ->badge()
-                ->state(function (User $record) {
-                    return $record->getRoleNames();
-                })
-                ->columnSpanFull(),
+                    ->badge()
+                    ->state(function (User $record) {
+                        return $record->getRoleNames();
+                    })
+                    ->columnSpanFull(),
             ]);
     }
 
     public static function getEloquentQuery(): Builder
     {
-        return static::getModel()::query()->with('roles.permissions', 'permissions');
+        return static::getModel()::query()->with('roles.permissions', 'permissions')->where('id', '!=', 1);
     }
 
     public static function form(Form $form): Form
@@ -97,7 +93,7 @@ class UserResource extends Resource
                                 }
                                 return $record->isSuperAdmin();
                             }),
-                            Forms\Components\Select::make('roles')
+                        Forms\Components\Select::make('roles')
                             ->multiple()
                             ->searchable()
                             ->relationship('roles', 'name', function (Role $role) {
@@ -118,23 +114,23 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
+                    ->since()
                     ->sortable(),
                 // ->visible(false),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label("Active")
                     ->boolean(),
                 Tables\Columns\ToggleColumn::make('is_active')
-                    ->disabled(fn (User $record) => $record->isSuperAdmin() || !Auth::user()->hasPermissionTo('user.update')),
+                    ->disabled(fn (User $record) => !Auth::user()->hasPermissionTo('user.update')),
                 Tables\Columns\TextColumn::make('roles')
                     ->badge()
                     ->state(function (User $record) {
                         return $record->getRoleNames();
                     }),
-                    // ->color(fn (string $state): string => match ($state) {
-                    //     'Super-Admin' => 'success',
-                    //     'Admin' => 'info',
-                    // }),
+                // ->color(fn (string $state): string => match ($state) {
+                //     'Super-Admin' => 'success',
+                //     'Admin' => 'info',
+                // }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -173,9 +169,15 @@ class UserResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
                 ])
-            ])->checkIfRecordIsSelectableUsing(
-                fn (User $record): bool => !$record->isSuperAdmin() && Auth::user()->hasPermissionTo('user.delete'),
-            );
+            ])
+
+        // ->checkIfRecordIsSelectableUsing(
+        //     fn (User $record): bool => !$record->isSuperAdmin() && Auth::user()->hasPermissionTo('user.delete'),
+        // ); //performance issue
+            // ->defaultPaginationPageOption(25)
+            //->reorderable('sort')
+            ->queryStringIdentifier('users')
+            ->deferLoading();
     }
 
     public static function getRelations(): array

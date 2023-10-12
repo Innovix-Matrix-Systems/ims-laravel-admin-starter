@@ -15,6 +15,7 @@ class EditRole extends EditRecord
 
     protected function getHeaderActions(): array
     {
+        //ignore the super admin role
         if($this->record->id == 1) {
             return [];
         }
