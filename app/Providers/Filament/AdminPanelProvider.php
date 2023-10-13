@@ -6,6 +6,7 @@ use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\Settings;
 use App\Filament\Resources\RoleResource;
 use App\Filament\Resources\UserResource;
+use App\Http\Middleware\LanguageMiddleware;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -31,6 +32,9 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->brandName('IMS Admin')
+            ->brandLogo(asset('assets/logo.jpg'))
+            ->favicon(asset('favicon.ico'))
             ->id('admin')
             ->path('admin')
             ->login()
@@ -48,7 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                //Widgets\FilamentInfoWidget::class,
             ])
             ->userMenuItems([
                 MenuItem::make()
@@ -78,6 +82,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                LanguageMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

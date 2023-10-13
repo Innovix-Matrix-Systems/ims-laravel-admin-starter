@@ -4,6 +4,7 @@ namespace App\Filament\Pages;
 
 use Filament\Actions\Action;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -11,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Widgets\AccountWidget;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,19 +23,24 @@ class Settings extends Page implements HasForms
     protected static ?string $navigationIcon = 'heroicon-o-cog';
     protected static ?string $navigationGroup = 'Settings';
     protected static ?int $navigationSort = 3;
-    protected static ?string $navigationLabel = 'Profile Settings';
-    protected ?string $heading = 'Profile Settings';
+    //protected static ?string $navigationLabel = 'Profile Settings';
+    //protected ?string $heading = 'Profile Settings';
+    public static function getNavigationLabel(): string
+    {
+        return __('pages.profile.settings');
+    }
 
     protected function getHeaderWidgets(): array
     {
         return [
-            AccountWidget::class,
+            //AccountWidget::class,
         ];
     }
 
     protected function getForms(): array
     {
         return [
+            'updateSystemSettingsForm',
             'updateProfileFrom',
             'updatePasswordForm',
         ];
@@ -46,6 +53,8 @@ class Settings extends Page implements HasForms
     public $password;
     public $password_confirmation;
 
+    public $language;
+
     public function mount(): void
     {
         $this->updateProfileFrom->fill([
@@ -53,12 +62,13 @@ class Settings extends Page implements HasForms
             'email' => Auth::user()->email,
         ]);
         $this->userId = Auth::user()->id;
+        $this->language = session('locale', config('app.locale'));
     }
 
     public function saveProfileAction()
     {
         return  Action::make('save profile information')
-            ->label('Save')
+            ->label(__('pages.profile.action.label'))
             ->action('saveProfile')
             ->color('primary');
     }
@@ -66,8 +76,16 @@ class Settings extends Page implements HasForms
     public function savePasswordAction()
     {
         return  Action::make('update password')
-            ->label('Update Password')
+            ->label(__('pages.profile.action.password.label'))
             ->action('updatePassword')
+            ->color('primary');
+    }
+
+    public function saveSettingsAction()
+    {
+        return  Action::make('update system settings')
+            ->label(__('pages.system.action.label'))
+            ->action('updateSettings')
             ->color('primary');
     }
 
@@ -85,13 +103,13 @@ class Settings extends Page implements HasForms
             $user->save();
 
             Notification::make()
-                ->title('Saved successfully')
+                ->title(__('pages.profile.saved_successfully'))
                 ->success()
                 ->send();
         } catch (\Throwable $th) {
             //throw $th;
             Notification::make()
-                ->title('Failed to update profile')
+                ->title(__('pages.profile.save_failed'))
                 ->danger()
                 ->send();
         }
@@ -110,27 +128,59 @@ class Settings extends Page implements HasForms
             $user->save();
 
             Notification::make()
-                ->title('Password Updated Successfully')
+                ->title(__('pages.profile.password.saved'))
                 ->success()
                 ->send();
         } catch (\Throwable $th) {
             //throw $th;
             Notification::make()
-                ->title('Failed to update password')
+                ->title(__('pages.profile.save_failed'))
                 ->danger()
                 ->send();
         }
+    }
+
+    public function updateSettings()
+    {
+        $this->validate([
+            'language' => 'required|string',
+        ]);
+
+        try {
+            session()->put('locale', $this->language);
+            app()->setLocale($this->language);
+            Carbon::setLocale($this->language);
+
+            Notification::make()
+                ->title(__('pages.profile.saved_successfully'))
+                ->success()
+                ->send();
+
+            return redirect('/admin');
+        } catch (\Throwable $th) {
+            //throw $th;
+            Notification::make()
+                ->title(__('pages.profile.save_failed'))
+                ->danger()
+                ->send();
+        }
+
     }
 
     public function updatePasswordForm(Form $form): Form
     {
         return $form
             ->schema([
-                Section::make("Password")
-                    ->description("Update Your Password")
+                Section::make(__('pages.profile.password'))
+                    ->description(__('pages.profile.update_password'))
                     ->schema([
-                        TextInput::make('password')->password()->autocomplete(false),
-                        TextInput::make('password_confirmation')->password(),
+                        TextInput::make('password')
+                        ->label(__('pages.profile.form.label.password'))
+                        ->password()
+                        ->autocomplete(false),
+                        TextInput::make('password_confirmation')
+                        ->label(__('pages.profile.form.label.password_confirmed'))
+                        ->password(),
                     ])->columns(2),
             ]);
     }
@@ -139,12 +189,40 @@ class Settings extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make("About")
-                    ->description('Settings for Account')
+                Section::make(__('pages.profile.account_information'))
+                    ->description(__('pages.profile.account_settings'))
                     ->schema([
-                        TextInput::make('name'),
-                        TextInput::make('email'),
+                        TextInput::make('name')
+                        ->label(__('pages.profile.form.label.name')),
+                        TextInput::make('email')
+                        ->label(__('pages.profile.form.label.email')),
                     ])->columns(2),
             ]);
+    }
+
+    public function updateSystemSettingsForm(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Section::make(__('pages.system.settings'))
+                    ->description(__('pages.system.settings.desc'))
+                    ->schema([
+                        Select::make('language')
+                            ->label(__('pages.system.settings.language'))
+                            ->options($this->getLanguageOptions())
+                            ->native(false)
+                            ->reactive()
+                            ->required()
+                            ->default('en'),
+                    ])->columns(1),
+            ]);
+    }
+
+    private function getLanguageOptions(): array
+    {
+        return [
+            'en' => 'English',
+            'bn' => 'Bangla(বাংলা)',
+        ];
     }
 }
