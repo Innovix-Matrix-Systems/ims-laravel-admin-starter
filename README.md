@@ -7,6 +7,7 @@ Our primary focus is to provide you with a hassle-free and ready-to-use local de
 Unlike traditional API generators or code generators, this project simplifies the process of setting up your local development environment. It enables you to jumpstart your Laravel-based API development and admin panel development without unnecessary complexities. This allows you to focus on building your application logic rather than spending time on initial setup.
 
 ![demo](demo.png "Ims Admin Starter")
+![demo-bn](demo-bn.png "Ims Admin Starter")
 
 ## Features
 
@@ -63,6 +64,14 @@ password: 123456
 The `ims-laravel-admin-starter` supports role and permission-based operations to control access to various functionalities within your admin panel. You can define roles with specific permissions and assign them to users as needed.
 
 Explore this project and experience the convenience of a ready-made local development environment for your Laravel-based APIs and Admin Panels.
+
+### Multilingual Support
+
+Elevate the accessibility and user-friendliness of this Starter Project by embracing multiple languages. With the assistance of [Filament Translations](https://filamentphp.com/docs/3.x/panels/installation#publishing-translations) and the [Laravel Lang](https://laravel-lang.com/) package, this Starter Project offers comprehensive multilingual support.
+
+For a detailed guide on working with multiple languages and translations, visit our dedicated [wiki page](https://github.com/Innovix-Matrix-Systems/ims-laravel-admin-starter/wiki/Working-with-Multiple-Language-Guide).
+
+Unlock a world of possibilities with seamless language localization, ensuring your application resonates with a global audience.
 
 ## Required Details Commands to run locally
 
