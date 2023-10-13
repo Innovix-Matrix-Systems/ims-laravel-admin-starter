@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class UserJoinChart extends ChartWidget
 {
+    protected static ?string $pollingInterval = null;
+    
     public function getHeading(): string|Htmlable|null
     {
         return __('widgets.chart.user.join_this_year');

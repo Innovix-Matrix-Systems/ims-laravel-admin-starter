@@ -8,6 +8,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverview extends BaseWidget
 {
+    protected static ?string $pollingInterval = null;
+    
     protected function getStats(): array
     {
         $users = User::with('roles')->get(['id','is_active']);

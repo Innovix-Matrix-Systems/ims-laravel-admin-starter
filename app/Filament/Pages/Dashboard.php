@@ -12,7 +12,6 @@ class Dashboard extends \Filament\Pages\Dashboard
     {
         return [
             AccountWidget::class,
-            AccountWidget::class,
             StatsOverview::class,
             UserJoinChart::class,
         ];
