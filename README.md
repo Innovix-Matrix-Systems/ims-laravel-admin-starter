@@ -223,7 +223,7 @@ Running tests is crucial to ensure the reliability and correctness of your appli
 
 ## Performance Tips
 
-Some Performance Tips for filament
+Some Performance Tips for Filament
 
 ### Icon cache
 
@@ -232,6 +232,25 @@ To optimize the performance of the Filament app, you can use the `php artisan ic
 ```bash
 php artisan icons:cache
 ```
+
+### Disabling View Collection in Debugbar
+
+If you're experiencing performance issues and want to speed up your application, consider disabling the view collection feature in the Debugbar. Here's how you can do it:
+
+1. Navigate to the `debugbar.php` configuration file located in the `config` directory of your app.
+
+2. Inside the `debugbar.php` file, you'll find an array named `collectors`. Locate the `'views'` collector within this array.
+
+3. To disable the view collection, simply set the `'views'` collector to `false`, like this:
+
+```php
+'collectors' => [
+    ...
+    'views' => false,  // Views with their data
+],
+```
+
+This change will prevent the Debugbar from collecting and displaying view data, which can help improve the performance of your application, particularly in a development environment.
 
 ## Extra Artisan Commands
 
