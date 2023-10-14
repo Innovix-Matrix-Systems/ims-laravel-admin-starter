@@ -191,6 +191,7 @@ class UserResource extends Resource
             // ); //performance issue
             // ->defaultPaginationPageOption(25)
             //->reorderable('sort')
+            //->selectCurrentPageOnly()
             ->queryStringIdentifier('users')
             ->deferLoading();
     }
