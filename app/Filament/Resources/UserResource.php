@@ -186,7 +186,6 @@ class UserResource extends Resource
                         ->deselectRecordsAfterCompletion()
                 ])
             ])
-
             // ->checkIfRecordIsSelectableUsing(
             //     fn (User $record): bool => !$record->isSuperAdmin() && Auth::user()->hasPermissionTo('user.delete'),
             // ); //performance issue

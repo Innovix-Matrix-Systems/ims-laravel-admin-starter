@@ -103,13 +103,13 @@ class Settings extends Page implements HasForms
             $user->save();
 
             Notification::make()
-                ->title(__('pages.profile.saved_successfully'))
+                ->title(__('notifications.save.success'))
                 ->success()
                 ->send();
         } catch (\Throwable $th) {
             //throw $th;
             Notification::make()
-                ->title(__('pages.profile.save_failed'))
+                ->title(__('notifications.profile.save.failed'))
                 ->danger()
                 ->send();
         }
@@ -128,13 +128,14 @@ class Settings extends Page implements HasForms
             $user->save();
 
             Notification::make()
-                ->title(__('pages.profile.password.saved'))
+                ->title(__('notifications.profile.password.save.success'))
                 ->success()
-                ->send();
+                ->send()
+                ->sendToDatabase(Auth::user());
         } catch (\Throwable $th) {
             //throw $th;
             Notification::make()
-                ->title(__('pages.profile.save_failed'))
+                ->title(__('notifications.profile.save.failed'))
                 ->danger()
                 ->send();
         }
@@ -152,15 +153,16 @@ class Settings extends Page implements HasForms
             Carbon::setLocale($this->language);
 
             Notification::make()
-                ->title(__('pages.profile.saved_successfully'))
+                ->title(__('notifications.save.success'))
                 ->success()
-                ->send();
+                ->send()
+                ->sendToDatabase(Auth::user());
 
             return redirect('/admin');
         } catch (\Throwable $th) {
             //throw $th;
             Notification::make()
-                ->title(__('pages.profile.save_failed'))
+                ->title(__('notifications.profile.save.failed'))
                 ->danger()
                 ->send();
         }
