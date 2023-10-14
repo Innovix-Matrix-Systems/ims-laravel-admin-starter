@@ -9,4 +9,6 @@ return [
     'permission.plural' => 'permissions',
     'user' => 'user',
     'user.plural' => 'users',
+    'export.bulk'      => 'Export selected',
+    'user.export.all'  => 'Export All Users',
 ];
