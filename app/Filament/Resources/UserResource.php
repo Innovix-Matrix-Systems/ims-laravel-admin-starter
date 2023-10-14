@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Exports\BulkExport;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Models\User;
@@ -14,6 +15,7 @@ use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -176,13 +178,18 @@ class UserResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
+                    Tables\Actions\DeleteBulkAction::make(),
+                    BulkAction::make('bulk-export')
+                        ->label(__('resources.export.bulk'))
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->action(fn ($records) => new BulkExport($records, 'users.csv'))
+                        ->deselectRecordsAfterCompletion()
                 ])
             ])
 
-        // ->checkIfRecordIsSelectableUsing(
-        //     fn (User $record): bool => !$record->isSuperAdmin() && Auth::user()->hasPermissionTo('user.delete'),
-        // ); //performance issue
+            // ->checkIfRecordIsSelectableUsing(
+            //     fn (User $record): bool => !$record->isSuperAdmin() && Auth::user()->hasPermissionTo('user.delete'),
+            // ); //performance issue
             // ->defaultPaginationPageOption(25)
             //->reorderable('sort')
             ->queryStringIdentifier('users')
