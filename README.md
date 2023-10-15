@@ -34,17 +34,17 @@ Unlike traditional API generators or code generators, this project simplifies th
 
 3. **Install Dependencies:**
 
+    Run the following command to install required dependencies using Composer:
+
+    ```bash
+    composer install
+    ```
+
     Run the following command to install required dependencies using npm and build them:
 
     ```bash
     npm install
     npm run build
-    ```
-
-    Run the following command to install required dependencies using Composer:
-
-    ```bash
-    composer install
     ```
 
 4. **Migrate and Seed the Database:**
