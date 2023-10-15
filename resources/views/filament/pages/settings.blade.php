@@ -1,22 +1,16 @@
 <x-filament-panels::page>
-    <div>
-        {{$this->updateSystemSettingsForm}}
-        <br>
-        <div style="text-align:center">
-            {{$this->saveSettingsAction}}
+    <x-filament-panels::form>
+        {{ $this->updateSystemSettingsForm }}
+        <div>
+            {{ $this->saveSettingsAction }}
         </div>
-
-        <br>
         {{ $this->updateProfileFrom }}
-        <br>
-        <div style="text-align:center">
+        <div>
             {{ $this->saveProfileAction }}
         </div>
-        <br>
         {{ $this->updatePasswordForm }}
-        <br>
-        <div style="text-align:center">
+        <div>
             {{ $this->savePasswordAction }}
         </div>
-    </div>
-</x-filament-panels::page>
+    </x-filament-panels::form>
+    </x-filament-panels::form>
