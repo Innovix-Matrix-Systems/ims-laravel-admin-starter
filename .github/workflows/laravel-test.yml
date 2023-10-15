@@ -20,7 +20,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm run dev
+          npm run build
           composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate key
         run: php artisan key:generate
