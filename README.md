@@ -15,6 +15,12 @@ Unlike traditional API generators or code generators, this project simplifies th
 -   User management
 -   Profile settings
 -   Multiple Language Support
+-   Theme Customization
+
+## Version Requirments
+   - Node 16+
+   - PHP version 8.1+
+   - MYSQL version 8.0+
 
 ## Quick Start
 
@@ -27,6 +33,13 @@ Unlike traditional API generators or code generators, this project simplifies th
     Update your `.env` file with the correct database credentials.
 
 3. **Install Dependencies:**
+
+    Run the following command to install required dependencies using npm and build them:
+
+    ```bash
+    npm install
+    npm run build
+    ```
 
     Run the following command to install required dependencies using Composer:
 
