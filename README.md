@@ -15,6 +15,12 @@ Unlike traditional API generators or code generators, this project simplifies th
 -   User management
 -   Profile settings
 -   Multiple Language Support
+-   Theme Customization
+
+## Version Requirments
+   - Node 16+
+   - PHP version 8.1+
+   - MYSQL version 8.0+
 
 ## Quick Start
 
@@ -32,6 +38,13 @@ Unlike traditional API generators or code generators, this project simplifies th
 
     ```bash
     composer install
+    ```
+
+    Run the following command to install required dependencies using npm and build them:
+
+    ```bash
+    npm install
+    npm run build
     ```
 
 4. **Migrate and Seed the Database:**

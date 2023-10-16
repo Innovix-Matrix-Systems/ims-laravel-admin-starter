@@ -131,8 +131,8 @@ class UserResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->label("Active")
                     ->boolean(),
-                Tables\Columns\ToggleColumn::make('is_active')
-                    ->disabled(fn (User $record) => !Auth::user()->hasPermissionTo('user.update')),
+                // Tables\Columns\ToggleColumn::make('is_active')
+                //     ->disabled(fn (User $record) => !Auth::user()->hasPermissionTo('user.update')),
                 Tables\Columns\TextColumn::make('roles')
                     ->badge()
                     ->state(function (User $record) {
@@ -164,7 +164,8 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()->visible(fn (User $record) => !$record->isSuperAdmin()),
+                Tables\Actions\DeleteAction::make(),
+                //Tables\Actions\DeleteAction::make()->visible(fn (User $record) => !$record->isSuperAdmin()),
                 // Action::make('delete')
                 //     ->requiresConfirmation()
                 //     ->icon('heroicon-o-trash')
