@@ -35,7 +35,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->brandName('IMS Admin')
-            ->brandLogo(asset('assets/logo.jpg'))
+            ->brandLogo(asset('assets/logo.svg'))
             ->favicon(asset('favicon.ico'))
             ->id('admin')
             ->path('admin')
@@ -95,7 +95,7 @@ class AdminPanelProvider extends PanelProvider
                 LanguageMiddleware::class,
             ])
             ->authMiddleware([
-                //Authenticate::class,
+                Authenticate::class,
                 AdminAuthenticate::class,
             ])
             ->renderHook(
