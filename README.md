@@ -11,11 +11,12 @@ Unlike traditional API generators or code generators, this project simplifies th
 
 ## Features
 
--   Role and permission-based operations
+-   Full Authentication System(using [Laravel jetstream](https://jetstream.laravel.com/introduction.html) package)
+-   Role and permission-based Authorization System(using [Laravel-Permission](https://spatie.be/docs/laravel-permission/v5/introduction) package)
 -   User management
 -   Profile settings
--   Multiple Language Support
--   Theme Customization
+-   Multiple Language Support (with the help of [Filament Translations](https://filamentphp.com/docs/3.x/panels/installation#publishing-translations) and [Larave-Lang](https://laravel-lang.com/) package)
+-   Theme Customization (Powered by [Tailwind CSS](https://tailwindcss.com/))
 
 ## Version Requirments
    - Node 16+

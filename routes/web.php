@@ -17,10 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/login', function () {
-    return redirect(route('filament.admin.auth.login'));
-})->name('login');
+// Route::get('/login', function () {
+//     return redirect(route('filament.admin.auth.login'));
+// })->name('login');
 Route::get('/logout', function () {
     Auth::logout();
-    return redirect(route('filament.admin.auth.login'));
+    return redirect(route('login'));
 })->name('logout');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

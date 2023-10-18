@@ -6,8 +6,10 @@ use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\Settings;
 use App\Filament\Resources\RoleResource;
 use App\Filament\Resources\UserResource;
+use App\Http\Middleware\AdminAuthenticate;
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\LanguageMiddleware;
-use Filament\Http\Middleware\Authenticate;
+//use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
@@ -33,11 +35,11 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->brandName('IMS Admin')
-            ->brandLogo(asset('assets/logo.jpg'))
+            ->brandLogo(asset('assets/logo.svg'))
             ->favicon(asset('favicon.ico'))
             ->id('admin')
             ->path('admin')
-            ->login()
+            //->login()
             //->registration()
             //->profile()
             //->passwordReset()
@@ -94,6 +96,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                AdminAuthenticate::class,
             ])
             ->renderHook(
                 'panels::body.end',
