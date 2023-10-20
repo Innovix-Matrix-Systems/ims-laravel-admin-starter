@@ -11,17 +11,25 @@ Unlike traditional API generators or code generators, this project simplifies th
 
 ## Features
 
--   Full Authentication System(using [Laravel jetstream](https://jetstream.laravel.com/introduction.html) package)
--   Role and permission-based Authorization System(using [Laravel-Permission](https://spatie.be/docs/laravel-permission/v5/introduction) package)
--   User management
--   Profile settings
--   Multiple Language Support (with the help of [Filament Translations](https://filamentphp.com/docs/3.x/panels/installation#publishing-translations) and [Larave-Lang](https://laravel-lang.com/) package)
--   Theme Customization (Powered by [Tailwind CSS](https://tailwindcss.com/))
+-   **Full Authentication System**: Implement a robust authentication system using [Laravel Jetstream](https://jetstream.laravel.com/introduction.html) package for secure user management and login functionality.
+
+-   **Role and Permission-based Authorization System**: Create a flexible authorization system using the [Laravel-Permission](https://spatie.be/docs/laravel-permission/v5/introduction) package, allowing you to define roles and permissions for fine-grained access control.
+
+-   **User Management**: Manage users efficiently, including user registration, profile updates, and user roles.
+
+-   **Profile Settings**: Enable users to customize their profiles, including personal information and preferences.
+
+-   **Multiple Language Support**: Make your application accessible to a global audience with the help of [Filament Translations](https://filamentphp.com/docs/3.x/panels/installation#publishing-translations) and [Laravel Lang](https://laravel-lang.com/) packages for multilingual support.
+
+-   **Theme Customization**: Customize the application's appearance and user interface using the power of [Tailwind CSS](https://tailwindcss.com/) to create visually appealing designs.
+
+-   **Docker Support**: Easily deploy and manage your application in a Docker container with the convenience of [Laravel Sail](https://laravel.com/docs/10.x/sail) for streamlined development and deployment workflows.
 
 ## Version Requirments
-   - Node 16+
-   - PHP version 8.1+
-   - MYSQL version 8.0+
+
+-   Node 16+
+-   PHP version 8.1+
+-   MYSQL version 8.0+
 
 ## Quick Start
 
@@ -87,123 +95,13 @@ For a detailed guide on working with multiple languages and translations, visit 
 
 Unlock a world of possibilities with seamless language localization, ensuring your application resonates with a global audience.
 
-## Required Details Commands to run locally
+## Running the Application with Docker and Laravel Sail
 
-1.**Create Your Project from the Template:**
+For a more comprehensive guide, please visit the [WIKI](https://github.com/Innovix-Matrix-Systems/ims-laravel-admin-starter/wiki/Running-the-Application-with-Docker-and-Laravel-Sail) page on GitHub:
 
-Begin by creating your project using the provided template.
+[Running the Application with Docker and Laravel Sail - Wiki](https://github.com/Innovix-Matrix-Systems/ims-laravel-admin-starter/wiki/Running-the-Application-with-Docker-and-Laravel-Sail)
 
-2.**Clone the Project:**
-
-Clone the created project repository to your local machine by running the following command, replacing `#your project git url` with your project's Git URL:
-
-```bash
-git clone git@github.com:Innovix-Matrix-Solutions/your-project.git #your project git url
-```
-
-3.**Navigate to the Project Directory:**
-
-Move to the project directory using the following command:
-
-Go to the project directory
-
-```bash
-cd your-project
-```
-
-4.**Copy .env.example to .env:**
-
-Before proceeding, copy the .env.example file to .env to set up your environment variables:
-
-```bash
-cp .env.example .env
-```
-
-5.**Install Local Development Packages:**
-To install local development packages, including Husky and other Laravel-specific packages, run the following commands:
-
-```bash
-npm install #for husky and other Laravel packages
-npx husky install #only once
-```
-
-To install Composer packages needed for CS Fixer to run independently outside of the Docker shell, run:
-
-```bash
-composer install
-```
-
-6.**Runnig on Laragon**
-If you prefer not to use Docker for local development, you can use [Laragon](https://github.com/leokhoa/laragon) to set up and run the Dokani backend on your local machine. Laragon is a powerful tool for local web development with a range of features.
-
-7.**Running Migration and Seeder**
-To initialize the database and start with some default data, you can run migrations and seeders using the following commands:
-
-**_Step 1: Migrate the Database_**
-
-The `php artisan migrate` command is used to create database tables based on your application's migration files. Run the following command:
-
-```bash
-php artisan migrate
-```
-
-**_Step 2: Seed the Database_**
-To populate the database with default data, including users or initial records, you can use seeders. Use the php artisan db:seed command to run seeders:
-
-```bash
-php artisan db:seed
-```
-
-**_Step 3: Migrate and Seed in One Command_**
-To both migrate the database and seed it in a single command, you can use:
-
-```bash
-php artisan migrate --seed
-```
-
-This command combines the migration and seeding steps, making it convenient for initial setup.
-
-8.**Generate IDE Helper Files:**
-Generate general IDE helper files for improved code autocompletion and navigation by running:
-
-```bash
-php artisan ide-helper:generate
-```
-
-Generate IDE model helper files without writing to model files using:
-
-```bash
-#use any one of this two commands
-php artisan ide-helper:models -N
-php artisan ide-helper:models --nowrite
-```
-
-9.**Run App health Check:**
-After starting the app, it's essential to verify its health by performing the following steps:
-
-Open your web browser or use a tool like `curl` to access the health check endpoint:
-
-```bash
-http://127.0.0.1:8000/api/healthz
-```
-
-Upon hitting the health check endpoint, the app should respond with a JSON object similar to the following:
-
-```json
-{
-    "cache": true,
-    "http": true,
-    "storage": true,
-    "database": true,
-    "migration": true
-}
-```
-
-If you receive a response like this, congratulations! Your app is healthy and functioning correctly.
-
-Verifying the health of your application is an essential step to ensure that all components and services are running as expected. This check can help you identify and resolve issues promptly.
-
-Remember to perform this health check regularly, especially after making significant changes to your application or its environment.
+This detailed resource provides step-by-step instructions and additional information to ensure a smooth experience when setting up and running your application with Docker and Laravel Sail.
 
 ## Running Test
 
@@ -212,6 +110,12 @@ To ensure the reliability and correctness of your application, it's essential to
 1. **Create a Separate Test Database:**
 
     Start by creating a dedicated test database for your application. You can name it `ims-admin-testing` to keep it distinct from your production database.
+
+    If you're using Docker and Laravel Sail, you can skip this step and instead update the phpunit.xml file to add a testing database:
+
+    ```xml
+    <env name="DB_DATABASE" value="testing"/>
+    ```
 
 2. **Run Tests:**
 
@@ -225,12 +129,28 @@ To ensure the reliability and correctness of your application, it's essential to
         ./vendor/bin/pest
         ```
 
+        If you are running with Sail, you can use this command:
+
+        ```bash
+        ./vendor/bin/sail test
+        # or if you have an alias configured:
+        sail test
+        ```
+
     - **Using Artisan:**
 
         Laravel's Artisan command-line tool provides seamless testing capabilities. Run the tests with the following Artisan command:
 
         ```bash
         php artisan test
+        ```
+
+        If you are running Sail, you can use this command:
+
+        ```bash
+        ./vendor/bin/sail artisan test
+        # or if you have an alias configured:
+        sail artisan test
         ```
 
 Running tests is crucial to ensure the reliability and correctness of your application's functionality. The above commands will initiate the testing process and provide you with valuable insights into the quality of your codebase.
@@ -269,6 +189,22 @@ This change will prevent the Debugbar from collecting and displaying view data, 
 ## Extra Artisan Commands
 
 This project provides additional Artisan commands to simplify your workflow and enhance productivity.
+
+### Generate IDE Helper Files:
+
+Generate general IDE helper files for improved code autocompletion and navigation by running:
+
+```bash
+php artisan ide-helper:generate
+```
+
+Generate IDE model helper files without writing to model files using:
+
+```bash
+#use any one of this two commands
+php artisan ide-helper:models -N
+php artisan ide-helper:models --nowrite
+```
 
 ### Run PHP CS Fixer
 
